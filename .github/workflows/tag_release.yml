@@ -1,0 +1,25 @@
+name: Tag releases with v1
+
+on:
+  # Make sure the workflow can be triggered manually
+  workflow_dispatch:
+
+  # And is triggered whenever we publish a release
+  release:
+    types: [published]
+
+jobs:
+  tag-v1:
+    name: Tag v1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update tag
+        run: |
+          echo tag "${GITHUB_REF:0:2}"
+          echo "${GITHUB_REF:0:4}"
+          echo "${GITHUB_REF}"
+#          git push origin HEAD:refs/heads/master --tags --force
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
